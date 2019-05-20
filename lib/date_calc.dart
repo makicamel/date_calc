@@ -20,7 +20,12 @@ class DateCalc extends DateTime {
           microsecond,
         );
 
-  bool isSameDate(DateTime date) {
-    return true;
-  }
+  DateCalc.now() : super.now();
+
+  DateCalc beginningOfDay() => DateCalc(year, month, day);
+
+  bool isSameDay(DateTime date) =>
+      year == date.year && month == date.month && day == date.day;
+  bool isNotSameDay(DateTime date) => !isSameDay(date);
+  bool isToday() => isSameDay(DateTime.now());
 }
