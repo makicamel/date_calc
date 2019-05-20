@@ -27,4 +27,10 @@ void main() {
     expect(t.beginningOfDay() == DateTime(t.year, t.month, t.day), true);
     expect(t.beginningOfDay() == DateTime.now(), false);
   });
+
+  test('utc constructor creates utc', () {
+    final t = DateCalc.now();
+    expect(DateCalc.utc(t.year, t.month, t.day).isUtc, true);
+    expect(DateCalc(t.year, t.month, t.day).isUtc, false);
+  });
 }
