@@ -1,15 +1,20 @@
 library date_calc;
 
 class DateCalc extends DateTime {
+  @override
+  int year, month, day;
+  @override
+  int hour, minute, second, millisecond, microsecond;
+
   DateCalc(
-    int year, [
-    int month = 1,
-    int day = 1,
-    int hour = 0,
-    int minute = 0,
-    int second = 0,
-    int millisecond = 0,
-    int microsecond = 0,
+    this.year, [
+    this.month = 1,
+    this.day = 1,
+    this.hour = 0,
+    this.minute = 0,
+    this.second = 0,
+    this.millisecond = 0,
+    this.microsecond = 0,
   ]) : super(
           year,
           month,
@@ -22,14 +27,14 @@ class DateCalc extends DateTime {
         );
 
   DateCalc.utc(
-    int year, [
-    int month = 1,
-    int day = 1,
-    int hour = 0,
-    int minute = 0,
-    int second = 0,
-    int millisecond = 0,
-    int microsecond = 0,
+    this.year, [
+    this.month = 1,
+    this.day = 1,
+    this.hour = 0,
+    this.minute = 0,
+    this.second = 0,
+    this.millisecond = 0,
+    this.microsecond = 0,
   ]) : super.utc(
           year,
           month,
@@ -73,6 +78,26 @@ class DateCalc extends DateTime {
   bool isNotSameDay(DateTime date) => !isSameDay(date);
 
   bool isToday() => isSameDay(DateTime.now());
+
+  DateCalc addYear(int other) {
+    return dup(year: year + other);
+  }
+
+  // returns new object added months.
+  // if there is no day, returns the last day insted.
+  DateCalc addMonth(int other) {
+    final orgDay = day;
+    final months = year * 12 + month + other;
+    year = (months / 12).floor();
+    month = months % 12;
+
+    // fix: get last day
+    if (day == orgDay) {
+      return dup(year: year, month: month);
+    } else {
+      return dup(year: year, month: month - 1, day: orgDay);
+    }
+  }
 
   DateTime toDate() {
     return isUtc
