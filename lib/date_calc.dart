@@ -49,6 +49,18 @@ class DateCalc extends DateTime {
           microsecond,
         );
 
+  DateCalc.fromDateTime(DateTime date)
+      : super(
+          date.year,
+          date.month,
+          date.day,
+          date.hour,
+          date.minute,
+          date.second,
+          date.millisecond,
+          date.microsecond,
+        );
+
   DateCalc dup({
     int year,
     int month,
@@ -74,6 +86,9 @@ class DateCalc extends DateTime {
   DateCalc.now() : super.now();
 
   DateCalc beginningOfDay() => DateCalc(year, month, day);
+
+  DateCalc lastOfDay() => DateCalc.fromDateTime(
+      DateTime(year, month, day + 1).subtract(Duration(milliseconds: 1)));
 
   bool isSameDay(DateTime date) =>
       year == date.year && month == date.month && day == date.day;
