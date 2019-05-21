@@ -1,15 +1,16 @@
 library date_calc;
 
 class DateCalc extends DateTime {
-  DateCalc(int year,
-      [int month = 1,
-      int day = 1,
-      int hour = 0,
-      int minute = 0,
-      int second = 0,
-      int millisecond = 0,
-      int microsecond = 0])
-      : super(
+  DateCalc(
+    int year, [
+    int month = 1,
+    int day = 1,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
+  ]) : super(
           year,
           month,
           day,
@@ -20,15 +21,16 @@ class DateCalc extends DateTime {
           microsecond,
         );
 
-  DateCalc.utc(int year,
-      [int month = 1,
-      int day = 1,
-      int hour = 0,
-      int minute = 0,
-      int second = 0,
-      int millisecond = 0,
-      int microsecond = 0])
-      : super.utc(
+  DateCalc.utc(
+    int year, [
+    int month = 1,
+    int day = 1,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
+  ]) : super.utc(
           year,
           month,
           day,
@@ -38,6 +40,28 @@ class DateCalc extends DateTime {
           millisecond,
           microsecond,
         );
+
+  DateCalc dup({
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+  }) {
+    return DateCalc(
+      year ?? this.year,
+      month ?? this.month,
+      day ?? this.day,
+      hour ?? this.hour,
+      minute ?? this.minute,
+      second ?? this.second,
+      millisecond ?? this.millisecond,
+      microsecond ?? this.microsecond,
+    );
+  }
 
   DateCalc.now() : super.now();
 

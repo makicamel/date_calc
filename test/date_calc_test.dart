@@ -33,4 +33,10 @@ void main() {
     expect(DateCalc.utc(t.year, t.month, t.day).isUtc, true);
     expect(DateCalc(t.year, t.month, t.day).isUtc, false);
   });
+
+  test('dup creates dup', () {
+    final t = DateCalc.now();
+    expect(t.dup() == t, true);
+    expect(t.dup(day: t.day + 1) == t.add(Duration(days: 1)), true);
+  });
 }
