@@ -1,20 +1,23 @@
 library date_calc;
 
 class DateCalc extends DateTime {
-  @override
-  int year, month, day;
-  @override
-  int hour, minute, second, millisecond, microsecond;
+  // @override
+  // int year, month, day;
+  // @override
+  // int hour, minute, second, millisecond, microsecond;
+  // todo:
+  // @override
+  // bool isUtc;
 
   DateCalc(
-    this.year, [
-    this.month = 1,
-    this.day = 1,
-    this.hour = 0,
-    this.minute = 0,
-    this.second = 0,
-    this.millisecond = 0,
-    this.microsecond = 0,
+    int year, [
+    int month = 1,
+    int day = 1,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
   ]) : super(
           year,
           month,
@@ -27,14 +30,14 @@ class DateCalc extends DateTime {
         );
 
   DateCalc.utc(
-    this.year, [
-    this.month = 1,
-    this.day = 1,
-    this.hour = 0,
-    this.minute = 0,
-    this.second = 0,
-    this.millisecond = 0,
-    this.microsecond = 0,
+    int year, [
+    int month = 1,
+    int day = 1,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
   ]) : super.utc(
           year,
           month,
@@ -84,12 +87,12 @@ class DateCalc extends DateTime {
   }
 
   // returns new object added months.
-  // if there is no day, returns the last day insted.
+  // if there is no corresponding day, returns the last day insted.
   DateCalc addMonth(int other) {
     final orgDay = day;
     final months = year * 12 + month + other;
-    year = (months / 12).floor();
-    month = months % 12;
+    // this.year = (months / 12).floor();
+    // this.month = months % 12;
 
     // fix: get last day
     if (day == orgDay) {
