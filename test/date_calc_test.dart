@@ -45,6 +45,19 @@ void main() {
     expect(t2.beginningOfMonth() == DateTime(2020, 2, 1), true);
   });
 
+  test('endOfMonth returns end of the month', () {
+    final t1 = DateCalc(2019, 2, 1);
+    final t2 = DateCalc(2020, 2, 1);
+    expect(t1.endOfMonth().month == 2, true);
+    expect(t1.endOfMonth().day == 28, true);
+    expect(t2.endOfMonth().month == 2, true);
+    expect(t2.endOfMonth().day == 29, true);
+    expect(
+        t2.endOfMonth().difference(t2.beginningOfMonth()) ==
+            Duration(days: 28, hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
+        true);
+  });
+
   test('utc constructor creates utc', () {
     final t = DateCalc.now();
     expect(DateCalc.utc(t.year, t.month, t.day).isUtc, true);
