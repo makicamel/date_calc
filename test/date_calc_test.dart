@@ -22,19 +22,27 @@ void main() {
     expect(DateCalc(t.year, t.month, t.day).isToday(), true);
   });
 
-  test('beginningOfDay is beginning of the day', () {
+  test('beginningOfDay returns beginning of the day', () {
     final t = DateCalc.now();
     expect(t.beginningOfDay() == DateTime(t.year, t.month, t.day), true);
     expect(t.beginningOfDay() == DateTime.now(), false);
   });
 
-  test('lastOfDay is last of the day', () {
+  test('lastOfDay returns last of the day', () {
     final t = DateCalc.now();
     expect(t.lastOfDay() == DateTime(t.year, t.month, t.day), false);
     expect(
         t.lastOfDay().difference(t.beginningOfDay()) ==
             Duration(hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
         true);
+  });
+
+  test('beginningOfMonth returns beginning of the month', () {
+    final t1 = DateCalc.now();
+    final t2 = DateCalc(2020, 2, 20);
+    expect(t1.beginningOfMonth() == DateTime(t1.year, t1.month), true);
+    expect(t1.beginningOfMonth() == DateTime.now(), false);
+    expect(t2.beginningOfMonth() == DateTime(2020, 2, 1), true);
   });
 
   test('utc constructor creates utc', () {

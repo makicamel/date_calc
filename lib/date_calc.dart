@@ -90,6 +90,8 @@ class DateCalc extends DateTime {
   DateCalc lastOfDay() => DateCalc.fromDateTime(
       DateTime(year, month, day + 1).subtract(Duration(milliseconds: 1)));
 
+  DateCalc beginningOfMonth() => DateCalc(year, month);
+
   bool isSameDay(DateTime date) =>
       year == date.year && month == date.month && day == date.day;
 
