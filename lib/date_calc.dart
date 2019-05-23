@@ -117,6 +117,10 @@ class DateCalc extends DateTime {
     }
   }
 
+  DateCalc addDay(int other) {
+    return dup(day: day + other);
+  }
+
   DateTime toDate() {
     return isUtc
         ? DateTime(

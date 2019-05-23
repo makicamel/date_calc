@@ -59,4 +59,10 @@ void main() {
     // expect(DateCalc(2010, 1, 1).addMonth(1) == DateCalc(2010, 2, 1), true);
     // expect(DateCalc(2010, 1, 31).addMonth(1) == DateCalc(2010, 2, 28), true);
   });
+
+  test('add days go well', () {
+    final t = DateCalc.now();
+    expect(t.addDay(1) == t.add(Duration(days: 1)), true);
+    expect(t.addDay(31) == t.add(Duration(days: 31)), true);
+  });
 }
