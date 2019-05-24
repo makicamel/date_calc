@@ -28,11 +28,11 @@ void main() {
     expect(t.beginningOfDay() == DateTime.now(), false);
   });
 
-  test('lastOfDay returns last of the day', () {
+  test('endOfDay returns end of the day', () {
     final t = DateCalc.now();
-    expect(t.lastOfDay() == DateTime(t.year, t.month, t.day), false);
+    expect(t.endOfDay() == DateTime(t.year, t.month, t.day), false);
     expect(
-        t.lastOfDay().difference(t.beginningOfDay()) ==
+        t.endOfDay().difference(t.beginningOfDay()) ==
             Duration(hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
         true);
   });
@@ -54,7 +54,12 @@ void main() {
     expect(t2.endOfMonth().day == 29, true);
     expect(
         t2.endOfMonth().difference(t2.beginningOfMonth()) ==
-            Duration(days: 28, hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
+            Duration(
+                days: 28,
+                hours: 23,
+                minutes: 59,
+                seconds: 59,
+                milliseconds: 999),
         true);
   });
 

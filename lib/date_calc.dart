@@ -61,6 +61,8 @@ class DateCalc extends DateTime {
           date.microsecond,
         );
 
+  DateCalc.now() : super.now();
+
   DateCalc dup({
     int year,
     int month,
@@ -83,11 +85,9 @@ class DateCalc extends DateTime {
     );
   }
 
-  DateCalc.now() : super.now();
-
   DateCalc beginningOfDay() => DateCalc(year, month, day);
 
-  DateCalc lastOfDay() => DateCalc.fromDateTime(
+  DateCalc endOfDay() => DateCalc.fromDateTime(
       DateTime(year, month, day + 1).subtract(Duration(milliseconds: 1)));
 
   DateCalc beginningOfMonth() => DateCalc(year, month);
