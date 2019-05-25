@@ -1,14 +1,6 @@
 library date_calc;
 
 class DateCalc extends DateTime {
-  // @override
-  // int year, month, day;
-  // @override
-  // int hour, minute, second, millisecond, microsecond;
-  // todo:
-  // @override
-  // bool isUtc;
-
   DateCalc(
     int year, [
     int month = 1,
@@ -63,6 +55,10 @@ class DateCalc extends DateTime {
 
   DateCalc.now() : super.now();
 
+  // Returns DateCalc instance duplicated.
+  // When pass some arguments, DateCalc instance reflects it.
+  // DateCalc(2020, 01, 01).dup() => 2020-01-01 00:00:00.000
+  // DateCalc(2020, 01, 01).dup(day: 2, hour: 1) => 2020-01-02 01:00:00.000
   DateCalc dup({
     int year,
     int month,
