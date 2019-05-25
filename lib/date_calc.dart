@@ -1,7 +1,9 @@
 library date_calc;
 
+import 'package:meta/meta.dart';
+
 class DateCalc extends DateTime {
-  final _daysInMonth = {
+  static final _daysInMonth = {
     1: 31,
     2: 28,
     3: 31,
@@ -97,6 +99,15 @@ class DateCalc extends DateTime {
     );
   }
 
+  static bool isLeapYearFor([int year]) =>
+      (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
+
+  // Returns days counts of received year and month.
+  static int daysInMonthOf({@required int year, @required int month}) =>
+      (month == DateTime.february && isLeapYearFor(year))
+          ? _daysInMonth['leap']
+          : _daysInMonth[month];
+
   DateCalc beginningOfDay() => DateCalc(year, month, day);
 
   DateCalc endOfDay() => DateCalc.fromDateTime(
@@ -114,18 +125,9 @@ class DateCalc extends DateTime {
 
   bool isToday() => isSameDay(DateTime.now());
 
-  bool isLeapYear([int year]) {
-    final y = year ?? this.year;
-    return (y % 4 == 0) && ((y % 100 != 0) || (y % 400 == 0));
-  }
+  bool isLeapYear() => isLeapYearFor(year);
 
-  int daysInMonth({int year, int month}) {
-    final m = month ?? this.month;
-    return (m == DateTime.february && isLeapYear(year))
-        ? _daysInMonth['leap']
-        : _daysInMonth[m];
-  }
-
+  int daysInMonth() => daysInMonthOf(year: year, month: month);
 
   // Returns new DateCalc instance added years.
   // If there is no corresponding day, returns the end day of month insted.
@@ -135,8 +137,10 @@ class DateCalc extends DateTime {
     if (result.month == m) {
       return result;
     } else {
-      final endDay = result.dup(month: result.month - 1).daysInMonth();
-      return result.dup(month: m, day: endDay);
+      return result.dup(
+        month: m,
+        day: daysInMonthOf(year: result.year, month: result.month - 1),
+      );
     }
   }
 
@@ -148,8 +152,10 @@ class DateCalc extends DateTime {
     if (result.day == day) {
       return result;
     } else {
-      final endDay = result.dup(month: result.month - 1).daysInMonth();
-      return result.dup(month: result.month - 1, day: endDay);
+      return result.dup(
+        month: result.month - 1,
+        day: daysInMonthOf(year: result.year, month: result.month - 1),
+      );
     }
   }
 
@@ -165,8 +171,10 @@ class DateCalc extends DateTime {
     if (result.month == m) {
       return result;
     } else {
-      final endDay = result.dup(month: result.month - 1).daysInMonth();
-      return result.dup(month: m, day: endDay);
+      return result.dup(
+        month: m,
+        day: daysInMonthOf(year: result.year, month: result.month - 1),
+      );
     }
   }
 
@@ -178,8 +186,10 @@ class DateCalc extends DateTime {
     if (result.day == day) {
       return result;
     } else {
-      final endDay = result.dup(month: result.month - 1).daysInMonth();
-      return result.dup(month: result.month - 1, day: endDay);
+      return result.dup(
+        month: result.month - 1,
+        day: daysInMonthOf(year: result.year, month: result.month - 1),
+      );
     }
   }
 

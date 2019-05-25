@@ -27,6 +27,7 @@ void main() {
     expect(DateCalc(2020).isLeapYear(), true);
     expect(DateCalc(2100).isLeapYear(), false);
     expect(DateCalc(2000).isLeapYear(), true);
+    expect(DateCalc.isLeapYearFor(2000), true);
   });
 
   test('daysInMonth returns days in month', () {
@@ -43,6 +44,7 @@ void main() {
     expect(DateCalc(2019, 11).daysInMonth(), 30);
     expect(DateCalc(2019, 12).daysInMonth(), 31);
     expect(DateCalc(2020, 2).daysInMonth(), 29);
+    expect(DateCalc.daysInMonthOf(year: 2020, month: 2), 29);
   });
 
   test('beginningOfDay returns beginning of the day', () {
