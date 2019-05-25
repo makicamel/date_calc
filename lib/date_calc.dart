@@ -1,6 +1,22 @@
 library date_calc;
 
 class DateCalc extends DateTime {
+  final _daysInMonth = {
+    1: 31,
+    2: 28,
+    3: 31,
+    4: 30,
+    5: 31,
+    6: 30,
+    7: 31,
+    8: 31,
+    9: 30,
+    10: 31,
+    11: 30,
+    12: 31,
+    'leap': 29,
+  };
+
   DateCalc(
     int year, [
     int month = 1,
@@ -98,6 +114,19 @@ class DateCalc extends DateTime {
 
   bool isToday() => isSameDay(DateTime.now());
 
+  bool isLeapYear([int year]) {
+    final y = year ?? this.year;
+    return (y % 4 == 0) && ((y % 100 != 0) || (y % 400 == 0));
+  }
+
+  int daysInMonth({int year, int month}) {
+    final m = month ?? this.month;
+    return (m == DateTime.february && isLeapYear(year))
+        ? _daysInMonth['leap']
+        : _daysInMonth[m];
+  }
+
+
   // Returns new DateCalc instance added years.
   // If there is no corresponding day, returns the end day of month insted.
   DateCalc addYear(int other) {
@@ -106,8 +135,8 @@ class DateCalc extends DateTime {
     if (result.month == m) {
       return result;
     } else {
-      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
-      return result.dup(month: m, day: newDay);
+      final endDay = result.dup(month: result.month - 1).daysInMonth();
+      return result.dup(month: m, day: endDay);
     }
   }
 
@@ -119,8 +148,8 @@ class DateCalc extends DateTime {
     if (result.day == day) {
       return result;
     } else {
-      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
-      return result.dup(month: result.month - 1, day: newDay);
+      final endDay = result.dup(month: result.month - 1).daysInMonth();
+      return result.dup(month: result.month - 1, day: endDay);
     }
   }
 
@@ -136,8 +165,8 @@ class DateCalc extends DateTime {
     if (result.month == m) {
       return result;
     } else {
-      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
-      return result.dup(month: m, day: newDay);
+      final endDay = result.dup(month: result.month - 1).daysInMonth();
+      return result.dup(month: m, day: endDay);
     }
   }
 
@@ -149,8 +178,8 @@ class DateCalc extends DateTime {
     if (result.day == day) {
       return result;
     } else {
-      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
-      return result.dup(month: result.month - 1, day: newDay);
+      final endDay = result.dup(month: result.month - 1).daysInMonth();
+      return result.dup(month: result.month - 1, day: endDay);
     }
   }
 

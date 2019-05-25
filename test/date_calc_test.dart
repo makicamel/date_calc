@@ -22,6 +22,29 @@ void main() {
     expect(DateCalc(t.year, t.month, t.day).isToday(), true);
   });
 
+  test('isLeapYear goes well', () {
+    expect(DateCalc(2019).isLeapYear(), false);
+    expect(DateCalc(2020).isLeapYear(), true);
+    expect(DateCalc(2100).isLeapYear(), false);
+    expect(DateCalc(2000).isLeapYear(), true);
+  });
+
+  test('daysInMonth returns days in month', () {
+    expect(DateCalc(2019, 1).daysInMonth(), 31);
+    expect(DateCalc(2019, 2).daysInMonth(), 28);
+    expect(DateCalc(2019, 3).daysInMonth(), 31);
+    expect(DateCalc(2019, 4).daysInMonth(), 30);
+    expect(DateCalc(2019, 5).daysInMonth(), 31);
+    expect(DateCalc(2019, 6).daysInMonth(), 30);
+    expect(DateCalc(2019, 7).daysInMonth(), 31);
+    expect(DateCalc(2019, 8).daysInMonth(), 31);
+    expect(DateCalc(2019, 9).daysInMonth(), 30);
+    expect(DateCalc(2019, 10).daysInMonth(), 31);
+    expect(DateCalc(2019, 11).daysInMonth(), 30);
+    expect(DateCalc(2019, 12).daysInMonth(), 31);
+    expect(DateCalc(2020, 2).daysInMonth(), 29);
+  });
+
   test('beginningOfDay returns beginning of the day', () {
     final t = DateCalc.now();
     expect(t.beginningOfDay() == DateTime(t.year, t.month, t.day), true);
