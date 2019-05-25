@@ -93,6 +93,30 @@ void main() {
     final t = DateCalc.now();
     expect(t.addDay(1) == t.add(Duration(days: 1)), true);
     expect(t.addDay(31) == t.add(Duration(days: 31)), true);
+    expectDate(DateCalc(2019, 2, 28).addDay(365), 2020, 2, 28);
+    expectDate(DateCalc(2019, 2, 28).addDay(366), 2020, 2, 29);
+    expectDate(DateCalc(2019, 2, 28).addDay(367), 2020, 3, 1);
+  });
+
+  test('subtract years go well', () {
+    expectDate(DateCalc(2011, 1, 1).subtractYear(1), 2010, 1, 1);
+    expectDate(DateCalc(2020, 1, 1).subtractYear(1), 2019, 1, 1);
+    expectDate(DateCalc(2020, 2, 29).subtractYear(1), 2019, 2, 28);
+  });
+
+  test('subtract months go well', () {
+    expectDate(DateCalc(2020, 1, 31).subtractMonth(1), 2019, 12, 31);
+    expectDate(DateCalc(2020, 5, 31).subtractMonth(3), 2020, 2, 29);
+    expectDate(DateCalc(2020, 2, 29).subtractMonth(12), 2019, 2, 28);
+  });
+
+  test('subtract days go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractDay(1) == t.subtract(Duration(days: 1)), true);
+    expect(t.subtractDay(31) == t.subtract(Duration(days: 31)), true);
+    expectDate(DateCalc(2020, 3, 1).subtractDay(367), 2019, 2, 28);
+    expectDate(DateCalc(2020, 2, 29).subtractDay(366), 2019, 2, 28);
+    expectDate(DateCalc(2020, 2, 28).subtractDay(365), 2019, 2, 28);
   });
 }
 

@@ -128,6 +128,36 @@ class DateCalc extends DateTime {
     return dup(day: day + other);
   }
 
+  // Returns new DateCalc instance subtracted years.
+  // If there is no corresponding day, returns the end day of month insted.
+  DateCalc subtractYear(int other) {
+    final m = month;
+    final result = dup(year: year - other);
+    if (result.month == m) {
+      return result;
+    } else {
+      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
+      return result.dup(month: m, day: newDay);
+    }
+  }
+
+  // Returns new DateCalc instance subtracted months.
+  // If there is no corresponding day, returns the end day of month insted.
+  DateCalc subtractMonth(int other) {
+    final m = month;
+    final result = dup(month: m - other);
+    if (result.day == day) {
+      return result;
+    } else {
+      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
+      return result.dup(month: result.month - 1, day: newDay);
+    }
+  }
+
+  DateCalc subtractDay(int other) {
+    return dup(day: day - other);
+  }
+
   DateTime toDate() {
     return isUtc
         ? DateTime(
