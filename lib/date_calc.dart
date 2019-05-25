@@ -132,69 +132,54 @@ class DateCalc extends DateTime {
   // Returns new DateCalc instance added years.
   // If there is no corresponding day, returns the end day of month insted.
   DateCalc addYear(int other) {
-    final m = month;
     final result = dup(year: year + other);
-    if (result.month == m) {
-      return result;
-    } else {
-      return result.dup(
-        month: m,
-        day: daysInMonthOf(year: result.year, month: result.month - 1),
-      );
-    }
+    return result.month == month
+        ? result
+        : result.dup(
+            month: month,
+            day: daysInMonthOf(year: result.year, month: result.month - 1),
+          );
   }
 
   // Returns new DateCalc instance added months.
   // If there is no corresponding day, returns the end day of month insted.
   DateCalc addMonth(int other) {
-    final m = month;
-    final result = dup(month: m + other);
-    if (result.day == day) {
-      return result;
-    } else {
-      return result.dup(
-        month: result.month - 1,
-        day: daysInMonthOf(year: result.year, month: result.month - 1),
-      );
-    }
+    final result = dup(month: month + other);
+    return result.day == day
+        ? result
+        : result.dup(
+            month: result.month - 1,
+            day: daysInMonthOf(year: result.year, month: result.month - 1),
+          );
   }
 
-  DateCalc addDay(int other) {
-    return dup(day: day + other);
-  }
+  DateCalc addDay(int other) => dup(day: day + other);
 
   // Returns new DateCalc instance subtracted years.
   // If there is no corresponding day, returns the end day of month insted.
   DateCalc subtractYear(int other) {
-    final m = month;
     final result = dup(year: year - other);
-    if (result.month == m) {
-      return result;
-    } else {
-      return result.dup(
-        month: m,
-        day: daysInMonthOf(year: result.year, month: result.month - 1),
-      );
-    }
+    return result.month == month
+        ? result
+        : result.dup(
+            month: month,
+            day: daysInMonthOf(year: result.year, month: result.month - 1),
+          );
   }
 
   // Returns new DateCalc instance subtracted months.
   // If there is no corresponding day, returns the end day of month insted.
   DateCalc subtractMonth(int other) {
-    final m = month;
-    final result = dup(month: m - other);
-    if (result.day == day) {
-      return result;
-    } else {
-      return result.dup(
-        month: result.month - 1,
-        day: daysInMonthOf(year: result.year, month: result.month - 1),
-      );
-    }
+    final result = dup(month: month - other);
+    return result.day == day
+        ? result
+        : result.dup(
+            month: result.month - 1,
+            day: daysInMonthOf(year: result.year, month: result.month - 1),
+          );
   }
 
-  DateCalc subtractDay(int other) {
-    return dup(day: day - other);
+  DateCalc subtractDay(int other) => dup(day: day - other);
   }
 
   DateTime toDate() {
