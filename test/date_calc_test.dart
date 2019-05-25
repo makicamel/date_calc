@@ -76,14 +76,17 @@ void main() {
   });
 
   test('add years go well', () {
-    final normal = DateCalc(2010, 1, 1);
-    expect(normal.addYear(1) == DateCalc(2011, 1, 1), true);
+    expectDate(DateCalc(2010, 1, 1).addYear(1), 2011, 1, 1);
+    expectDate(DateCalc(2019, 1, 1).addYear(1), 2020, 1, 1);
+    expectDate(DateCalc(2020, 2, 29).addYear(1), 2021, 2, 28);
   });
 
   test('add months go well', () {
-    // expect(DateCalc(2009, 12, 1).addMonth(1) == DateCalc(2010, 1, 1), true);
-    // expect(DateCalc(2010, 1, 1).addMonth(1) == DateCalc(2010, 2, 1), true);
-    // expect(DateCalc(2010, 1, 31).addMonth(1) == DateCalc(2010, 2, 28), true);
+    expectDate(DateCalc(2019, 12, 1).addMonth(1), 2020, 1, 1);
+    expectDate(DateCalc(2019, 1, 1).addMonth(1), 2019, 2, 1);
+    expectDate(DateCalc(2019, 1, 31).addMonth(1), 2019, 2, 28);
+    expectDate(DateCalc(2020, 1, 31).addMonth(1), 2020, 2, 29);
+    expectDate(DateCalc(2019, 1, 31).addMonth(13), 2020, 2, 29);
   });
 
   test('add days go well', () {
@@ -91,4 +94,8 @@ void main() {
     expect(t.addDay(1) == t.add(Duration(days: 1)), true);
     expect(t.addDay(31) == t.add(Duration(days: 31)), true);
   });
+}
+
+void expectDate(DateTime date, int y, [int m = 1, int d = 1]) {
+  expect(date, DateTime(y, m, d));
 }

@@ -98,23 +98,29 @@ class DateCalc extends DateTime {
 
   bool isToday() => isSameDay(DateTime.now());
 
+  // Returns new DateCalc instance added years.
+  // If there is no corresponding day, returns the end day of month insted.
   DateCalc addYear(int other) {
-    return dup(year: year + other);
+    final m = month;
+    final result = dup(year: year + other);
+    if (result.month == m) {
+      return result;
+    } else {
+      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
+      return result.dup(month: m, day: newDay);
+    }
   }
 
-  // returns new object added months.
-  // if there is no corresponding day, returns the last day insted.
+  // Returns new DateCalc instance added months.
+  // If there is no corresponding day, returns the end day of month insted.
   DateCalc addMonth(int other) {
-    final orgDay = day;
-    final months = year * 12 + month + other;
-    // this.year = (months / 12).floor();
-    // this.month = months % 12;
-
-    // fix: get last day
-    if (day == orgDay) {
-      return dup(year: year, month: month);
+    final m = month;
+    final result = dup(month: m + other);
+    if (result.day == day) {
+      return result;
     } else {
-      return dup(year: year, month: month - 1, day: orgDay);
+      final newDay = result.dup(month: result.month - 1).endOfMonth().day;
+      return result.dup(month: result.month - 1, day: newDay);
     }
   }
 
