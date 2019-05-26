@@ -143,6 +143,94 @@ void main() {
     expectDate(DateCalc(2020, 2, 29).subtractDay(366), 2019, 2, 28);
     expectDate(DateCalc(2020, 2, 28).subtractDay(365), 2019, 2, 28);
   });
+
+  test('differenceValue returns correct year value', () {
+    expect(
+        DateCalc(2020, 1, 1)
+            .differenceValue(date: DateTime(2020, 1, 2), type: DateType.year),
+        0);
+    expect(
+        DateCalc(2020, 1, 1)
+            .differenceValue(date: DateTime(2021, 1, 2), type: DateType.year),
+        1);
+    expect(
+        DateCalc(2020, 1, 3)
+            .differenceValue(date: DateTime(2021, 1, 2), type: DateType.year),
+        0);
+    expect(
+        DateCalc(2020, 4, 5)
+            .differenceValue(date: DateTime(2019, 1, 2), type: DateType.year),
+        1);
+  });
+
+  test('differenceValue returns correct month value', () {
+    expect(
+        DateCalc(2020, 1, 1)
+            .differenceValue(date: DateTime(2020, 1, 2), type: DateType.month),
+        0);
+    expect(
+        DateCalc(2020, 1, 1)
+            .differenceValue(date: DateTime(2021, 1, 2), type: DateType.month),
+        12);
+    expect(
+        DateCalc(2020, 1, 3)
+            .differenceValue(date: DateTime(2021, 1, 2), type: DateType.month),
+        11);
+    expect(
+        DateCalc(2020, 4, 5)
+            .differenceValue(date: DateTime(2019, 1, 2), type: DateType.month),
+        15);
+  });
+
+  test('differenceValue returns correct day value', () {
+    expect(
+        DateCalc(2020, 1, 1, 13, 45).differenceValue(
+            date: DateTime(2020, 1, 2, 12, 50), type: DateType.day),
+        0);
+    expect(
+        DateCalc(2020, 1, 1, 12, 45).differenceValue(
+            date: DateTime(2021, 1, 2, 12, 50), type: DateType.day),
+        367);
+    expect(
+        DateCalc(2020, 2, 3, 12, 45).differenceValue(
+            date: DateTime(2020, 3, 4, 12, 50), type: DateType.day),
+        30);
+    expect(
+        DateCalc(2020, 1, 1)
+            .differenceValue(date: DateTime(2020, 2, 1), type: DateType.day),
+        31);
+    expect(
+        DateCalc(2020, 2, 1)
+            .differenceValue(date: DateTime(2020, 1, 1), type: DateType.day),
+        31);
+  });
+
+  test('differenceValue returns correct other values', () {
+    expect(
+        DateCalc(2020, 1, 1, 13, 45).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 50), type: DateType.hour),
+        0);
+    expect(
+        DateCalc(2020, 1, 1, 13, 45).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 45), type: DateType.hour),
+        1);
+    expect(
+        DateCalc(2020, 1, 1, 12, 45, 5).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 44, 50), type: DateType.minute),
+        0);
+    expect(
+        DateCalc(2020, 1, 1, 12, 45, 5).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 44, 5), type: DateType.minute),
+        1);
+    expect(
+        DateCalc(2020, 1, 1, 12, 45, 5, 30).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 45, 4, 50), type: DateType.second),
+        0);
+    expect(
+        DateCalc(2020, 1, 1, 12, 45, 5, 50).differenceValue(
+            date: DateTime(2020, 1, 1, 12, 45, 4, 50), type: DateType.second),
+        1);
+  });
 }
 
 void expectDate(DateTime date, int y, [int m = 1, int d = 1]) {

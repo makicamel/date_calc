@@ -2,6 +2,8 @@ library date_calc;
 
 import 'package:meta/meta.dart';
 
+enum DateType { year, month, day, hour, minute, second }
+
 class DateCalc extends DateTime {
   static final _daysInMonth = {
     1: 31,
@@ -180,6 +182,45 @@ class DateCalc extends DateTime {
   }
 
   DateCalc subtractDay(int other) => dup(day: day - other);
+
+  // Returns int of argument's type.
+  // When recieve no date, calcurate self and now.
+  // DateCalc(2020, 1, 5).differenceValue(date: DateTime(2020, 3, 3), type: DateType.month)
+  // => 1
+  // DateTime.now() => 2020, 2, 3
+  // DateCalc(2020, 1, 2).differenceValue(type: DateType.month)
+  // => 1
+  int differenceValue({DateTime date, @required DateType type}) {
+    final other = date == null ? DateCalc.now() : DateCalc.fromDateTime(date);
+    final e = isBefore(other) ? this : other;
+    final l = isBefore(other) ? other : this;
+    int result;
+
+    switch (type) {
+      case DateType.year:
+        result = (l.year - e.year) + (e.dup(year: l.year).isAfter(l) ? -1 : 0);
+        break;
+      case DateType.month:
+        result = (l.year - e.year) * 12 +
+            (l.month - e.month) +
+            (e.dup(year: l.year, month: l.month).isAfter(l) ? -1 : 0);
+        break;
+      case DateType.day:
+        result = l.difference(e).inDays;
+        break;
+      case DateType.hour:
+        result = l.difference(e).inHours;
+        break;
+      case DateType.minute:
+        result = l.difference(e).inMinutes;
+        break;
+      case DateType.second:
+        result = l.difference(e).inSeconds;
+        break;
+      default:
+      // do nothing
+    }
+    return result;
   }
 
   DateTime toDate() {
