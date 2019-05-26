@@ -29,11 +29,13 @@ print(date.addYear(1).addMonth(1).daysInMonth());
 // => 29
 print(date.dup(minute: 11));
 // => 2019-01-05 00:11:00.000
+print(date.differenceValue(date: DateTime(2019, 3, 3), type: DateType.month));
+// => 1
 print(DateCalc.now().isToday());
 // => true
 ```
 
-Because DateCalc is a subclass of DateTime, you can use all DateTime methods.
+Because DateCalc is a subclass of DateTime, you can use all DateTime methods.  
 When you need exactly DateTime object, use `toDate()` method.
 
 ```dart
