@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 enum DateType { year, month, day, hour, minute, second }
 
 class DateCalc extends DateTime {
+  /// Days count in a month.
   static final _daysInMonth = {
     1: 31,
     2: 28,
@@ -21,6 +22,7 @@ class DateCalc extends DateTime {
     'leap': 29,
   };
 
+  /// Constructs a [DateCalc] instance specified in the local time zone.
   DateCalc(
     int year, [
     int month = 1,
@@ -41,6 +43,7 @@ class DateCalc extends DateTime {
           microsecond,
         );
 
+  /// Constructs a [DateCalc] instance specified in the UTC time zone.
   DateCalc.utc(
     int year, [
     int month = 1,
@@ -61,6 +64,7 @@ class DateCalc extends DateTime {
           microsecond,
         );
 
+  /// Constructs a [DateCalc] instance from a [DateTime] instance.
   DateCalc.fromDateTime(DateTime date)
       : super(
           date.year,
@@ -73,12 +77,14 @@ class DateCalc extends DateTime {
           date.microsecond,
         );
 
+  /// Constructs a [DateCalc] instance with current date and time in the
+  /// local time zone.
   DateCalc.now() : super.now();
 
-  // Returns DateCalc instance duplicated.
-  // When pass some arguments, DateCalc instance reflects it.
-  // DateCalc(2020, 01, 01).dup() => 2020-01-01 00:00:00.000
-  // DateCalc(2020, 01, 01).dup(day: 2, hour: 1) => 2020-01-02 01:00:00.000
+  /// Returns a [DateCalc] instance duplicated.
+  /// When pass some arguments, the [DateCalc] instance reflects it.
+  /// DateCalc(2020, 01, 01).dup() => 2020-01-01 00:00:00.000
+  /// DateCalc(2020, 01, 01).dup(day: 2, hour: 1) => 2020-01-02 01:00:00.000
   DateCalc dup({
     int year,
     int month,
@@ -101,38 +107,75 @@ class DateCalc extends DateTime {
     );
   }
 
-  static bool isLeapYearFor([int year]) =>
+  /// Returns true if given year is a leap year.
+  /// DateCalc.isLeapYearFor(2020)
+  /// => true
+  static bool isLeapYearFor(int year) =>
       (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
 
-  // Returns days counts of received year and month.
+  /// Returns days count of given year and month.
+  /// DateCalc.daysInMonthOf(year: 2020, month: 2)
+  /// => 29
   static int daysInMonthOf({@required int year, @required int month}) =>
       (month == DateTime.february && isLeapYearFor(year))
           ? _daysInMonth['leap']
           : _daysInMonth[month];
 
+  /// Returns a [DateCalc] instance with the beginning time of the day.
+  /// DateCalc(2020, 2, 5).beginningOfDay()
+  /// => 2020-02-05 00:00:00.000
   DateCalc beginningOfDay() => DateCalc(year, month, day);
 
+  /// Returns a [DateCalc] instance with the end time of the day.
+  /// End time means '23:59:59.999', not '23:59:59.999.999'.
+  /// DateCalc(2020, 2, 5).endOfDay()
+  /// => 2020-02-05 23:59:59.999
   DateCalc endOfDay() => DateCalc.fromDateTime(
       DateTime(year, month, day + 1).subtract(Duration(milliseconds: 1)));
 
+  /// Returns a [DateCalc] instance with the beginning time of the month.
+  /// DateCalc(2020, 2, 5).beginningOfMonth()
+  /// => 2020-02-01 00:00:00.000
   DateCalc beginningOfMonth() => DateCalc(year, month);
 
+  /// Returns a [DateCalc] instance with the end day and time of the month.
+  /// End time means '23:59:59.999', not '23:59:59.999.999'.
+  /// DateCalc(2020, 2, 5).endOfMonth()
+  /// => 2020-02-29 23:59:59.999
   DateCalc endOfMonth() => DateCalc.fromDateTime(
       DateTime(year, month + 1).subtract(Duration(milliseconds: 1)));
 
+  /// Returns true if self and given [date] are the same day.
+  /// DateCalc(2020, 2, 5).isSameDay(DateTime(2020, 2, 5))
+  /// => true
   bool isSameDay(DateTime date) =>
       year == date.year && month == date.month && day == date.day;
 
+  /// Returns true if self and given [date] are the different day.
+  /// DateCalc(2020, 2, 5).isNotSameDay(DateTime(2020, 2, 5))
+  /// => false
   bool isNotSameDay(DateTime date) => !isSameDay(date);
 
+  /// Returns true if self is today.
+  /// DateTime.now() => 2020-02-05 00:00:00.000
+  /// DateCalc(2020, 2, 5).isToday()
+  /// => true
   bool isToday() => isSameDay(DateTime.now());
 
+  /// Returns true if self is a leap year.
+  /// DateCalc(2020, 2, 5).isLeapYearFor()
+  /// => true
   bool isLeapYear() => isLeapYearFor(year);
 
+  /// Returns days count of self.
+  /// DateCalc(2020, 2, 5).daysInMonthOf()
+  /// => 29
   int daysInMonth() => daysInMonthOf(year: year, month: month);
 
-  // Returns new DateCalc instance added years.
-  // If there is no corresponding day, returns the end day of month insted.
+  /// Returns a [DateCalc] instance added years.
+  /// If there is no corresponding day, returns the end day of the month insted.
+  /// DateCalc(2020, 2, 29).addYear(1)
+  /// => 2021-02-28 00:00:00.000
   DateCalc addYear(int other) {
     final result = dup(year: year + other);
     return result.month == month
@@ -143,8 +186,10 @@ class DateCalc extends DateTime {
           );
   }
 
-  // Returns new DateCalc instance added months.
-  // If there is no corresponding day, returns the end day of month insted.
+  /// Returns a [DateCalc] instance added months.
+  /// If there is no corresponding day, returns the end day of the month insted.
+  /// DateCalc(2020, 1, 31).addMonth(1)
+  /// => 2020-02-29 00:00:00.000
   DateCalc addMonth(int other) {
     final result = dup(month: month + other);
     return result.day == day
@@ -155,10 +200,13 @@ class DateCalc extends DateTime {
           );
   }
 
+  /// Returns a [DateCalc] instance added days.
   DateCalc addDay(int other) => dup(day: day + other);
 
-  // Returns new DateCalc instance subtracted years.
-  // If there is no corresponding day, returns the end day of month insted.
+  /// Returns a [DateCalc] instance subtracted years.
+  /// If there is no corresponding day, returns the end day of month insted.
+  /// DateCalc(2020, 2, 29).subtractYear(1)
+  /// => 2019-02-28 00:00:00.000
   DateCalc subtractYear(int other) {
     final result = dup(year: year - other);
     return result.month == month
@@ -169,8 +217,10 @@ class DateCalc extends DateTime {
           );
   }
 
-  // Returns new DateCalc instance subtracted months.
-  // If there is no corresponding day, returns the end day of month insted.
+  /// Returns a [DateCalc] instance subtracted months.
+  /// If there is no corresponding day, returns the end day of month insted.
+  /// DateCalc(2020, 3, 31).subtractMonth(1)
+  /// => 2020-02-29 00:00:00.000
   DateCalc subtractMonth(int other) {
     final result = dup(month: month - other);
     return result.day == day
@@ -181,15 +231,16 @@ class DateCalc extends DateTime {
           );
   }
 
+  /// Returns a [DateCalc] instance subtracted days.
   DateCalc subtractDay(int other) => dup(day: day - other);
 
-  // Returns int of argument's type.
-  // When recieve no date, calcurate self and now.
-  // DateCalc(2020, 1, 5).differenceValue(date: DateTime(2020, 3, 3), type: DateType.month)
-  // => 1
-  // DateTime.now() => 2020, 2, 3
-  // DateCalc(2020, 1, 2).differenceValue(type: DateType.month)
-  // => 1
+  /// Returns int of given type.
+  /// When no given date, calcurate self and DateTime.now().
+  /// DateCalc(2020, 1, 5).differenceValue(date: DateTime(2020, 3, 3), type: DateType.month)
+  /// => 1
+  /// DateTime.now() => 2020, 2, 3
+  /// DateCalc(2020, 1, 2).differenceValue(type: DateType.month)
+  /// => 1
   int differenceValue({DateTime date, @required DateType type}) {
     final other = date == null ? DateCalc.now() : DateCalc.fromDateTime(date);
     final e = isBefore(other) ? this : other;
@@ -223,6 +274,7 @@ class DateCalc extends DateTime {
     return result;
   }
 
+  /// Returns a [DateTime] instance.
   DateTime toDate() {
     return isUtc
         ? DateTime(
