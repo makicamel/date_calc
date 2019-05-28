@@ -10,7 +10,7 @@ Add `date_calc` as a dependency in pubspec.yaml file.
 
 ```yaml
 dependencies:
-  date_calc: ^0.0.1
+  date_calc: ^0.1.0
 ```
 
 Run `pub install`.
