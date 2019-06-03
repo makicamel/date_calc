@@ -1,6 +1,7 @@
 name: date_calc
 description: Date manipulation library for Dart. It provides a class that inherits from the DateTime class, makes it easy to calculate additions, subtractions and so on.
 version: 0.1.0
+version: 0.1.0+1
 author: makicamel <unright@gmail.com>
 homepage: https://github.com/makicamel/date_calc
 
@@ -8,7 +9,7 @@ environment:
   sdk: '>=2.1.0 <3.0.0'
 
 dependencies:
-  meta: ^1.1.7
+  meta: ^1.1.0
 
 dev_dependencies:
   test: ^1.6.3
