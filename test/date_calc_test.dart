@@ -231,6 +231,11 @@ void main() {
             date: DateTime(2020, 1, 1, 12, 45, 4, 50), type: DateType.second),
         1);
   });
+
+  test('toDate returns DateTime instance', () {
+    expect(DateCalc.now().toDate() is DateTime, true);
+    expect(DateCalc.now().toDate() is DateCalc, false);
+  });
 }
 
 void expectDate(DateTime date, int y, [int m = 1, int d = 1]) {
