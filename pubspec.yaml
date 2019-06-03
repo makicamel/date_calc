@@ -10,6 +10,7 @@ environment:
 
 dependencies:
   meta: ^1.1.0
+  intl: ^0.15.7
 
 dev_dependencies:
   test: ^1.6.3

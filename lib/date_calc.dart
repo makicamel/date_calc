@@ -1,6 +1,8 @@
 library date_calc;
 
 import 'package:meta/meta.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 enum DateType { year, month, day, hour, minute, second }
 
@@ -281,5 +283,24 @@ class DateCalc extends DateTime {
             year, month, day, hour, minute, second, millisecond, microsecond)
         : DateTime.utc(
             year, month, day, hour, minute, second, millisecond, microsecond);
+  }
+
+  /// Returns fomatted string by [DateFormat].
+  /// This method provides simply parsing.
+  /// When you need some extra methods like parseLoose or add_m,
+  /// you can use [DateFormat] itself.
+  ///
+  /// DateCalc(2019, 2, 1).toFormattedString()
+  /// => February 1, 2019 12:00:00 AM
+  /// DateCalc(2019, 2, 1).toFormattedString(format: 'yMd')
+  /// => 2/1/2019
+  /// DateCalc(2019, 2, 1).toFormattedString(format: 'yMd', locale: 'ja_JP')
+  /// => 2019/2/1
+  ///
+  /// You can check usable locale in [dateTimePatternMap]
+  /// in intl/date_time_patterns.dart.
+  String toFormattedString({String format, String locale}) {
+    initializeDateFormatting(locale);
+    return DateFormat(format, locale).format(this);
   }
 }

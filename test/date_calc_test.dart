@@ -236,6 +236,13 @@ void main() {
     expect(DateCalc.now().toDate() is DateTime, true);
     expect(DateCalc.now().toDate() is DateCalc, false);
   });
+
+  test('toFormattedString returns formatted string', () {
+    final t = DateCalc(2019, 1, 2, 3, 45);
+    expect(t.toFormattedString(), 'January 2, 2019 3:45:00 AM');
+    expect(t.toFormattedString(format: 'yMd'), '1/2/2019');
+    expect(t.toFormattedString(format: 'yMd', locale: 'ja_JP'), '2019/1/2');
+  });
 }
 
 void expectDate(DateTime date, int y, [int m = 1, int d = 1]) {
