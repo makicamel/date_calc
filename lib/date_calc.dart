@@ -83,7 +83,7 @@ class DateCalc extends DateTime {
   /// local time zone.
   DateCalc.now() : super.now();
 
-  /// Returns a [DateCalc] instance duplicated.
+  /// Constructs a [DateCalc] instance duplicated.
   /// When pass some arguments, the [DateCalc] instance reflects it.
   /// DateCalc(2020, 01, 01).dup() => 2020-01-01 00:00:00.000
   /// DateCalc(2020, 01, 01).dup(day: 2, hour: 1) => 2020-01-02 01:00:00.000
@@ -108,6 +108,12 @@ class DateCalc extends DateTime {
       microsecond ?? this.microsecond,
     );
   }
+
+  /// Returns a [DateCalc] instance based on [formattedString].
+  /// DateCalc.parse('2019-01-02 03:45:06')
+  /// => 2019-01-02 03:45:06.000
+  static DateCalc parse(String formattedString) =>
+      DateCalc.fromDateTime(DateTime.parse(formattedString));
 
   /// Returns true if given year is a leap year.
   /// DateCalc.isLeapYearFor(2020)

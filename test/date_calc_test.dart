@@ -88,16 +88,24 @@ void main() {
         true);
   });
 
-  test('utc constructor creates utc', () {
+  test('utc constructs utc', () {
     final t = DateCalc.now();
     expect(DateCalc.utc(t.year, t.month, t.day).isUtc, true);
     expect(DateCalc(t.year, t.month, t.day).isUtc, false);
   });
 
-  test('dup creates dup', () {
+  test('dup constructs dup', () {
     final t = DateCalc.now();
     expect(t.dup() == t, true);
     expect(t.dup(day: t.day + 1) == t.add(Duration(days: 1)), true);
+  });
+
+  test('parse returns correct DateCalc instance', () {
+    expect(DateCalc.parse('2019-01-02 03:45:06') is DateCalc, true);
+    expect(
+        DateCalc.parse('2019-01-02 03:45:06') ==
+            DateTime.parse('2019-01-02 03:45:06'),
+        true);
   });
 
   test('add years go well', () {
