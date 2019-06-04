@@ -298,15 +298,15 @@ class DateCalc extends DateTime {
   ///
   /// DateCalc(2019, 2, 1).toFormattedString()
   /// => February 1, 2019 12:00:00 AM
-  /// DateCalc(2019, 2, 1).toFormattedString(format: 'yMd')
+  /// DateCalc(2019, 2, 1).toFormattedString('yMd')
   /// => 2/1/2019
-  /// DateCalc(2019, 2, 1).toFormattedString(format: 'yMd', locale: 'ja_JP')
+  /// DateCalc(2019, 2, 1).toFormattedString('yMd', 'ja_JP')
   /// => 2019/2/1
   ///
   /// You can check usable locale in [dateTimePatternMap]
   /// in intl/date_time_patterns.dart.
-  String toFormattedString({String format, String locale}) {
-    initializeDateFormatting(locale);
+  /// Call [initializeDateFormatting(locale)], then do [toFormattedString].
+  String toFormattedString([String format, String locale]) {
     return DateFormat(format, locale).format(this);
   }
 }

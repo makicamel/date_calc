@@ -1,3 +1,8 @@
+## 0.1.1+1
+
+* Remove [initializeDateFormatting] from toFormattedString.  
+As it affects for app, it should be called from app codes.
+
 ## 0.1.1
 
 * Add parse method.

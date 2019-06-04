@@ -1,3 +1,4 @@
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
 import 'package:date_calc/date_calc.dart';
 
@@ -248,8 +249,9 @@ void main() {
   test('toFormattedString returns formatted string', () {
     final t = DateCalc(2019, 1, 2, 3, 45);
     expect(t.toFormattedString(), 'January 2, 2019 3:45:00 AM');
-    expect(t.toFormattedString(format: 'yMd'), '1/2/2019');
-    expect(t.toFormattedString(format: 'yMd', locale: 'ja_JP'), '2019/1/2');
+    expect(t.toFormattedString('yMd'), '1/2/2019');
+    initializeDateFormatting('ja_JP');
+    expect(t.toFormattedString('MMMM', 'ja_JP'), '1月');
   });
 }
 
