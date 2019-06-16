@@ -132,6 +132,49 @@ void main() {
     expectDate(DateCalc(2019, 2, 28).addDay(367), 2020, 3, 1);
   });
 
+  test('add hours go well', () {
+    final t = DateCalc.now();
+    expect(t.addHour(1) == t.add(Duration(hours: 1)), true);
+    expect(t.addHour(24) == t.add(Duration(hours: 24)), true);
+    expect(DateCalc(2019, 2, 28).addHour(1) == DateCalc(2019, 2, 28, 1), true);
+  });
+
+  test('add minutes go well', () {
+    final t = DateCalc.now();
+    expect(t.addMinute(1) == t.add(Duration(minutes: 1)), true);
+    expect(t.addMinute(60) == t.add(Duration(minutes: 60)), true);
+    expect(DateCalc(2019, 2, 28).addMinute(1) == DateCalc(2019, 2, 28, 0, 1),
+        true);
+  });
+
+  test('add seconds go well', () {
+    final t = DateCalc.now();
+    expect(t.addSecond(1) == t.add(Duration(seconds: 1)), true);
+    expect(t.addSecond(60) == t.add(Duration(seconds: 60)), true);
+    expect(DateCalc(2019, 2, 28).addSecond(1) == DateCalc(2019, 2, 28, 0, 0, 1),
+        true);
+  });
+
+  test('add milliseconds go well', () {
+    final t = DateCalc.now();
+    expect(t.addMillisecond(1) == t.add(Duration(milliseconds: 1)), true);
+    expect(t.addMillisecond(60) == t.add(Duration(milliseconds: 60)), true);
+    expect(
+        DateCalc(2019, 2, 28).addMillisecond(1) ==
+            DateCalc(2019, 2, 28, 0, 0, 0, 1),
+        true);
+  });
+
+  test('add microseconds go well', () {
+    final t = DateCalc.now();
+    expect(t.addMicrosecond(1) == t.add(Duration(microseconds: 1)), true);
+    expect(t.addMicrosecond(60) == t.add(Duration(microseconds: 60)), true);
+    expect(
+        DateCalc(2019, 2, 28).addMicrosecond(1) ==
+            DateCalc(2019, 2, 28, 0, 0, 0, 0, 1),
+        true);
+  });
+
   test('subtract years go well', () {
     expectDate(DateCalc(2011, 1, 1).subtractYear(1), 2010, 1, 1);
     expectDate(DateCalc(2020, 1, 1).subtractYear(1), 2019, 1, 1);
@@ -151,6 +194,59 @@ void main() {
     expectDate(DateCalc(2020, 3, 1).subtractDay(367), 2019, 2, 28);
     expectDate(DateCalc(2020, 2, 29).subtractDay(366), 2019, 2, 28);
     expectDate(DateCalc(2020, 2, 28).subtractDay(365), 2019, 2, 28);
+  });
+
+  test('subtract hours go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractHour(1) == t.subtract(Duration(hours: 1)), true);
+    expect(t.subtractHour(24) == t.subtract(Duration(hours: 24)), true);
+    expect(DateCalc(2020, 3, 1).subtractHour(1) == DateCalc(2020, 2, 29, 23),
+        true);
+  });
+
+  test('subtract minutes go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractMinute(1) == t.subtract(Duration(minutes: 1)), true);
+    expect(t.subtractMinute(60) == t.subtract(Duration(minutes: 60)), true);
+    expect(
+        DateCalc(2020, 3, 1).subtractMinute(1) == DateCalc(2020, 2, 29, 23, 59),
+        true);
+  });
+
+  test('subtract seconds go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractSecond(1) == t.subtract(Duration(seconds: 1)), true);
+    expect(t.subtractSecond(60) == t.subtract(Duration(seconds: 60)), true);
+    expect(
+        DateCalc(2020, 3, 1).subtractSecond(1) ==
+            DateCalc(2020, 2, 29, 23, 59, 59),
+        true);
+  });
+
+  test('subtract milliseconds go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractMillisecond(1) == t.subtract(Duration(milliseconds: 1)),
+        true);
+    expect(
+        t.subtractMillisecond(1000) == t.subtract(Duration(milliseconds: 1000)),
+        true);
+    expect(
+        DateCalc(2020, 3, 1).subtractMillisecond(1) ==
+            DateCalc(2020, 2, 29, 23, 59, 59, 999),
+        true);
+  });
+
+  test('subtract microseconds go well', () {
+    final t = DateCalc.now();
+    expect(t.subtractMicrosecond(1) == t.subtract(Duration(microseconds: 1)),
+        true);
+    expect(
+        t.subtractMicrosecond(1000) == t.subtract(Duration(microseconds: 1000)),
+        true);
+    expect(
+        DateCalc(2020, 3, 1).subtractMicrosecond(1) ==
+            DateCalc(2020, 2, 29, 23, 59, 59, 999, 999),
+        true);
   });
 
   test('differenceValue returns correct year value', () {

@@ -1,3 +1,7 @@
+## 0.1.1+2
+
+* Add remaining add & subtract methods.
+
 ## 0.1.1+1
 
 * Remove [initializeDateFormatting] from toFormattedString.  

@@ -2,7 +2,6 @@ library date_calc;
 
 import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 enum DateType { year, month, day, hour, minute, second }
 
@@ -211,6 +210,21 @@ class DateCalc extends DateTime {
   /// Returns a [DateCalc] instance added days.
   DateCalc addDay(int other) => dup(day: day + other);
 
+  /// Returns a [DateCalc] instance added hours.
+  DateCalc addHour(int other) => dup(hour: hour + other);
+
+  /// Returns a [DateCalc] instance added minutes.
+  DateCalc addMinute(int other) => dup(minute: minute + other);
+
+  /// Returns a [DateCalc] instance added seconds.
+  DateCalc addSecond(int other) => dup(second: second + other);
+
+  /// Returns a [DateCalc] instance added milliseconds.
+  DateCalc addMillisecond(int other) => dup(millisecond: millisecond + other);
+
+  /// Returns a [DateCalc] instance added microseconds.
+  DateCalc addMicrosecond(int other) => dup(microsecond: microsecond + other);
+
   /// Returns a [DateCalc] instance subtracted years.
   /// If there is no corresponding day, returns the end day of month insted.
   /// DateCalc(2020, 2, 29).subtractYear(1)
@@ -241,6 +255,23 @@ class DateCalc extends DateTime {
 
   /// Returns a [DateCalc] instance subtracted days.
   DateCalc subtractDay(int other) => dup(day: day - other);
+
+  /// Returns a [DateCalc] instance subtracted hours.
+  DateCalc subtractHour(int other) => dup(hour: hour - other);
+
+  /// Returns a [DateCalc] instance subtracted minutes.
+  DateCalc subtractMinute(int other) => dup(minute: minute - other);
+
+  /// Returns a [DateCalc] instance subtracted seconds.
+  DateCalc subtractSecond(int other) => dup(second: second - other);
+
+  /// Returns a [DateCalc] instance subtracted milliseconds.
+  DateCalc subtractMillisecond(int other) =>
+      dup(millisecond: millisecond - other);
+
+  /// Returns a [DateCalc] instance subtracted microseconds.
+  DateCalc subtractMicrosecond(int other) =>
+      dup(microsecond: microsecond - other);
 
   /// Returns int of given type.
   /// When no given date, calcurate self and DateTime.now().
