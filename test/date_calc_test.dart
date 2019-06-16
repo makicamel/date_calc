@@ -1,3 +1,4 @@
+import 'package:date_calc/dc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
 import 'package:date_calc/date_calc.dart';
@@ -175,6 +176,26 @@ void main() {
         true);
   });
 
+  test('+ operator goes well', () {
+    expectDate(DateCalc(2010, 1, 1) + DC.year(1), 2011, 1, 1);
+    expectDate(DateCalc(2019, 1, 1) + DC.year(1), 2020, 1, 1);
+    expectDate(DateCalc(2020, 2, 29) + DC.year(1), 2021, 2, 28);
+    expectDate(DateCalc(2019, 12, 1) + DC.month(1), 2020, 1, 1);
+    expectDate(DateCalc(2019, 1, 1) + DC.month(1), 2019, 2, 1);
+    expectDate(DateCalc(2019, 1, 31) + DC.month(1), 2019, 2, 28);
+    expectDate(DateCalc(2020, 1, 31) + DC.month(1), 2020, 2, 29);
+    expectDate(DateCalc(2019, 1, 31) + DC.month(13), 2020, 2, 29);
+    final t = DateCalc.now();
+    expect(t + DC.day(1) == t.add(Duration(days: 1)), true);
+    expect(t + DC.day(31) == t.add(Duration(days: 31)), true);
+    expectDate(DateCalc(2019, 2, 28) + DC.day(365), 2020, 2, 28);
+    expectDate(DateCalc(2019, 2, 28) + DC.day(366), 2020, 2, 29);
+    expectDate(DateCalc(2019, 2, 28) + DC.day(367), 2020, 3, 1);
+    expect(t + DC.hour(1) == t.add(Duration(hours: 1)), true);
+    expect(t + DC.minute(1) == t.add(Duration(minutes: 1)), true);
+    expect(t + DC.second(1) == t.add(Duration(seconds: 1)), true);
+  });
+
   test('subtract years go well', () {
     expectDate(DateCalc(2011, 1, 1).subtractYear(1), 2010, 1, 1);
     expectDate(DateCalc(2020, 1, 1).subtractYear(1), 2019, 1, 1);
@@ -247,6 +268,24 @@ void main() {
         DateCalc(2020, 3, 1).subtractMicrosecond(1) ==
             DateCalc(2020, 2, 29, 23, 59, 59, 999, 999),
         true);
+  });
+
+  test('- operator goes well', () {
+    expectDate(DateCalc(2011, 1, 1) - DC.year(1), 2010, 1, 1);
+    expectDate(DateCalc(2020, 1, 1) - DC.year(1), 2019, 1, 1);
+    expectDate(DateCalc(2020, 2, 29) - DC.year(1), 2019, 2, 28);
+    expectDate(DateCalc(2020, 1, 31) - DC.month(1), 2019, 12, 31);
+    expectDate(DateCalc(2020, 5, 31) - DC.month(3), 2020, 2, 29);
+    expectDate(DateCalc(2020, 2, 29) - DC.month(12), 2019, 2, 28);
+    final t = DateCalc.now();
+    expect(t - DC.day(1) == t.subtract(Duration(days: 1)), true);
+    expect(t - DC.day(31) == t.subtract(Duration(days: 31)), true);
+    expectDate(DateCalc(2020, 3, 1) - DC.day(367), 2019, 2, 28);
+    expectDate(DateCalc(2020, 2, 29) - DC.day(366), 2019, 2, 28);
+    expectDate(DateCalc(2020, 2, 28) - DC.day(365), 2019, 2, 28);
+    expect(t - DC.hour(1) == t.subtract(Duration(hours: 1)), true);
+    expect(t - DC.minute(1) == t.subtract(Duration(minutes: 1)), true);
+    expect(t - DC.second(1) == t.subtract(Duration(seconds: 1)), true);
   });
 
   test('differenceValue returns correct year value', () {
