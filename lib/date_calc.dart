@@ -273,44 +273,6 @@ class DateCalc extends DateTime {
   DateCalc subtractMicrosecond(int other) =>
       dup(microsecond: microsecond - other);
 
-  DateCalc operator +(Map<DateType, int> other) {
-    switch (other.keys.first) {
-      case DateType.year:
-        return addYear(other.values.first);
-      case DateType.month:
-        return addMonth(other.values.first);
-      case DateType.day:
-        return addDay(other.values.first);
-      case DateType.hour:
-        return addHour(other.values.first);
-      case DateType.minute:
-        return addMinute(other.values.first);
-      case DateType.second:
-        return addSecond(other.values.first);
-      default:
-      // do nothing
-    }
-  }
-
-  DateCalc operator -(Map<DateType, int> other) {
-    switch (other.keys.first) {
-      case DateType.year:
-        return subtractYear(other.values.first);
-      case DateType.month:
-        return subtractMonth(other.values.first);
-      case DateType.day:
-        return subtractDay(other.values.first);
-      case DateType.hour:
-        return subtractHour(other.values.first);
-      case DateType.minute:
-        return subtractMinute(other.values.first);
-      case DateType.second:
-        return subtractSecond(other.values.first);
-      default:
-      // do nothing
-    }
-  }
-
   /// Returns int of given type.
   /// When no given date, calcurate self and DateTime.now().
   /// DateCalc(2020, 1, 5).differenceValue(date: DateTime(2020, 3, 3), type: DateType.month)

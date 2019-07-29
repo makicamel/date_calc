@@ -10,7 +10,7 @@ Add `date_calc` as a dependency in pubspec.yaml file.
 
 ```yaml
 dependencies:
-  date_calc: ^0.1.1
+  date_calc: ^0.1.0
 ```
 
 Run `pub install`.
@@ -45,7 +45,6 @@ date.subtractYear(1).toDate();
 
 ## milestones for 1.0.0
 
-- considering about how to calculate more efficiently
 - support for DST
 - support for UTC & Timezone
-- support for leap second
+- support for leapsecond
