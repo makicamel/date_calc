@@ -1,3 +1,7 @@
+## 0.1.1+3
+
+* Fix to `toDate` method returns correct `isUtc` parameter.
+
 ## 0.1.1+2
 
 * Add remaining add & subtract methods.
