@@ -354,9 +354,9 @@ class DateCalc extends DateTime {
   /// Returns a [DateTime] instance.
   DateTime toDate() {
     return isUtc
-        ? DateTime(
+        ? DateTime.utc(
             year, month, day, hour, minute, second, millisecond, microsecond)
-        : DateTime.utc(
+        : DateTime(
             year, month, day, hour, minute, second, millisecond, microsecond);
   }
 

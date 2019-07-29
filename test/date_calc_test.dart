@@ -381,6 +381,11 @@ void main() {
     expect(DateCalc.now().toDate() is DateCalc, false);
   });
 
+  test('toDate returns DateTime instance with correct Utc', () {
+    expect(DateCalc.utc(2000).toDate().isUtc, true);
+    expect(DateCalc.now().toDate().isUtc, false);
+  });
+
   test('toFormattedString returns formatted string', () {
     final t = DateCalc(2019, 1, 2, 3, 45);
     expect(t.toFormattedString(), 'January 2, 2019 3:45:00 AM');
