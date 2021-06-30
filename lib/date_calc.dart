@@ -4,6 +4,16 @@ import 'package:intl/intl.dart';
 
 enum DateType { year, month, day, hour, minute, second }
 
+class UnexceptedMonthException implements Exception {
+  String cause;
+  UnexceptedMonthException(this.cause);
+}
+
+class UnexpectedDateTypeException implements Exception {
+    String cause;
+  UnexpectedDateTypeException(this.cause);
+}
+
 class DateCalc extends DateTime {
   static final _durationOneMs = const Duration(milliseconds: 1);
   /// Days count in a month.
@@ -124,14 +134,14 @@ class DateCalc extends DateTime {
   /// Returns days count of given year and month.
   /// DateCalc.daysInMonthOf(year: 2020, month: 2)
   /// => 29
-  static int/*!*/ daysInMonthOf({required int year, required int month}) {
+  static int daysInMonthOf({required int year, required int month}) {
           final daysInMonth = (month == DateTime.february && isLeapYearFor(year))
-          ? _daysInMonth['leap']/*!*/
-          : _daysInMonth[month]/*!*/;
-          if(daysInMonth != null) {
+          ? _daysInMonth['leap']
+          : _daysInMonth[month];
+          if (daysInMonth != null) {
             return daysInMonth;
           }
-          return 0;
+          throw new UnexceptedMonthException('Unexpected month ${month}');
   }
       
 
@@ -236,7 +246,7 @@ class DateCalc extends DateTime {
   /// If there is no corresponding day, returns the end day of month insted.
   /// DateCalc(2020, 2, 29).subtractYear(1)
   /// => 2019-02-28 00:00:00.000
-  DateCalc/*!*/ subtractYear(int/*!*/ other) {
+  DateCalc subtractYear(int other) {
     final result = dup(year: year - other);
     return result.month == month
         ? result
@@ -250,7 +260,7 @@ class DateCalc extends DateTime {
   /// If there is no corresponding day, returns the end day of month insted.
   /// DateCalc(2020, 3, 31).subtractMonth(1)
   /// => 2020-02-29 00:00:00.000
-  DateCalc/*!*/ subtractMonth(int/*!*/ other) {
+  DateCalc subtractMonth(int other) {
     final result = dup(month: month - other);
     return result.day == day
         ? result
@@ -261,7 +271,7 @@ class DateCalc extends DateTime {
   }
 
   /// Returns a [DateCalc] instance subtracted days.
-  DateCalc/*!*/ subtractDay(int other) => dup(day: day - other);
+  DateCalc subtractDay(int other) => dup(day: day - other);
 
   /// Returns a [DateCalc] instance subtracted hours.
   DateCalc subtractHour(int other) => dup(hour: hour - other);
@@ -273,11 +283,11 @@ class DateCalc extends DateTime {
   DateCalc subtractSecond(int other) => dup(second: second - other);
 
   /// Returns a [DateCalc] instance subtracted milliseconds.
-  DateCalc/*!*/ subtractMillisecond(int other) =>
+  DateCalc subtractMillisecond(int other) =>
       dup(millisecond: millisecond - other);
 
   /// Returns a [DateCalc] instance subtracted microseconds.
-  DateCalc/*!*/ subtractMicrosecond(int other) =>
+  DateCalc subtractMicrosecond(int other) =>
       dup(microsecond: microsecond - other);
 
   /// Returns int of given type.
@@ -315,9 +325,7 @@ class DateCalc extends DateTime {
         result = l.difference(e).inSeconds;
         break;
       default:
-      // could not happen
-        result = 0;
-        break;
+        throw new UnexpectedDateTypeException('Unexpected DateType of $type');
     }
     return result;
   }
