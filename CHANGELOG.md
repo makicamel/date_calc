@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Null-Safety for Dart ^2.12.0
+
 ## 0.1.1+4
 
 * Updated intl-dependency (to use with package datetime_picker_formfield 2.0.0)
