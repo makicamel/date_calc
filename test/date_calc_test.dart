@@ -1,6 +1,6 @@
+import 'package:date_calc/date_calc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test/test.dart';
-import 'package:date_calc/date_calc.dart';
 
 void main() {
   test('Yesterday isSameDay yesterday, yesrterday isNotSameDay today', () {
@@ -59,7 +59,7 @@ void main() {
     expect(t.endOfDay() == DateTime(t.year, t.month, t.day), false);
     expect(
         t.endOfDay().difference(t.beginningOfDay()) ==
-            Duration(hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
+            const Duration(hours: 23, minutes: 59, seconds: 59, milliseconds: 999),
         true);
   });
 
@@ -80,7 +80,7 @@ void main() {
     expect(t2.endOfMonth().day == 29, true);
     expect(
         t2.endOfMonth().difference(t2.beginningOfMonth()) ==
-            Duration(
+            const Duration(
                 days: 28,
                 hours: 23,
                 minutes: 59,
@@ -98,7 +98,7 @@ void main() {
   test('dup constructs dup', () {
     final t = DateCalc.now();
     expect(t.dup() == t, true);
-    expect(t.dup(day: t.day + 1) == t.add(Duration(days: 1)), true);
+    expect(t.dup(day: t.day + 1) == t.add(const Duration(days: 1)), true);
   });
 
   test('parse returns correct DateCalc instance', () {
@@ -125,8 +125,8 @@ void main() {
 
   test('add days go well', () {
     final t = DateCalc.now();
-    expect(t.addDay(1) == t.add(Duration(days: 1)), true);
-    expect(t.addDay(31) == t.add(Duration(days: 31)), true);
+    expect(t.addDay(1) == t.add(const Duration(days: 1)), true);
+    expect(t.addDay(31) == t.add(const Duration(days: 31)), true);
     expectDate(DateCalc(2019, 2, 28).addDay(365), 2020, 2, 28);
     expectDate(DateCalc(2019, 2, 28).addDay(366), 2020, 2, 29);
     expectDate(DateCalc(2019, 2, 28).addDay(367), 2020, 3, 1);
@@ -134,31 +134,31 @@ void main() {
 
   test('add hours go well', () {
     final t = DateCalc.now();
-    expect(t.addHour(1) == t.add(Duration(hours: 1)), true);
-    expect(t.addHour(24) == t.add(Duration(hours: 24)), true);
+    expect(t.addHour(1) == t.add(const Duration(hours: 1)), true);
+    expect(t.addHour(24) == t.add(const Duration(hours: 24)), true);
     expect(DateCalc(2019, 2, 28).addHour(1) == DateCalc(2019, 2, 28, 1), true);
   });
 
   test('add minutes go well', () {
     final t = DateCalc.now();
-    expect(t.addMinute(1) == t.add(Duration(minutes: 1)), true);
-    expect(t.addMinute(60) == t.add(Duration(minutes: 60)), true);
+    expect(t.addMinute(1) == t.add(const Duration(minutes: 1)), true);
+    expect(t.addMinute(60) == t.add(const Duration(minutes: 60)), true);
     expect(DateCalc(2019, 2, 28).addMinute(1) == DateCalc(2019, 2, 28, 0, 1),
         true);
   });
 
   test('add seconds go well', () {
     final t = DateCalc.now();
-    expect(t.addSecond(1) == t.add(Duration(seconds: 1)), true);
-    expect(t.addSecond(60) == t.add(Duration(seconds: 60)), true);
+    expect(t.addSecond(1) == t.add(const Duration(seconds: 1)), true);
+    expect(t.addSecond(60) == t.add(const Duration(seconds: 60)), true);
     expect(DateCalc(2019, 2, 28).addSecond(1) == DateCalc(2019, 2, 28, 0, 0, 1),
         true);
   });
 
   test('add milliseconds go well', () {
     final t = DateCalc.now();
-    expect(t.addMillisecond(1) == t.add(Duration(milliseconds: 1)), true);
-    expect(t.addMillisecond(60) == t.add(Duration(milliseconds: 60)), true);
+    expect(t.addMillisecond(1) == t.add(const Duration(milliseconds: 1)), true);
+    expect(t.addMillisecond(60) == t.add(const Duration(milliseconds: 60)), true);
     expect(
         DateCalc(2019, 2, 28).addMillisecond(1) ==
             DateCalc(2019, 2, 28, 0, 0, 0, 1),
@@ -167,8 +167,8 @@ void main() {
 
   test('add microseconds go well', () {
     final t = DateCalc.now();
-    expect(t.addMicrosecond(1) == t.add(Duration(microseconds: 1)), true);
-    expect(t.addMicrosecond(60) == t.add(Duration(microseconds: 60)), true);
+    expect(t.addMicrosecond(1) == t.add(const Duration(microseconds: 1)), true);
+    expect(t.addMicrosecond(60) == t.add(const Duration(microseconds: 60)), true);
     expect(
         DateCalc(2019, 2, 28).addMicrosecond(1) ==
             DateCalc(2019, 2, 28, 0, 0, 0, 0, 1),
@@ -189,8 +189,8 @@ void main() {
 
   test('subtract days go well', () {
     final t = DateCalc.now();
-    expect(t.subtractDay(1) == t.subtract(Duration(days: 1)), true);
-    expect(t.subtractDay(31) == t.subtract(Duration(days: 31)), true);
+    expect(t.subtractDay(1) == t.subtract(const Duration(days: 1)), true);
+    expect(t.subtractDay(31) == t.subtract(const Duration(days: 31)), true);
     expectDate(DateCalc(2020, 3, 1).subtractDay(367), 2019, 2, 28);
     expectDate(DateCalc(2020, 2, 29).subtractDay(366), 2019, 2, 28);
     expectDate(DateCalc(2020, 2, 28).subtractDay(365), 2019, 2, 28);
@@ -198,16 +198,16 @@ void main() {
 
   test('subtract hours go well', () {
     final t = DateCalc.now();
-    expect(t.subtractHour(1) == t.subtract(Duration(hours: 1)), true);
-    expect(t.subtractHour(24) == t.subtract(Duration(hours: 24)), true);
+    expect(t.subtractHour(1) == t.subtract(const Duration(hours: 1)), true);
+    expect(t.subtractHour(24) == t.subtract(const Duration(hours: 24)), true);
     expect(DateCalc(2020, 3, 1).subtractHour(1) == DateCalc(2020, 2, 29, 23),
         true);
   });
 
   test('subtract minutes go well', () {
     final t = DateCalc.now();
-    expect(t.subtractMinute(1) == t.subtract(Duration(minutes: 1)), true);
-    expect(t.subtractMinute(60) == t.subtract(Duration(minutes: 60)), true);
+    expect(t.subtractMinute(1) == t.subtract(const Duration(minutes: 1)), true);
+    expect(t.subtractMinute(60) == t.subtract(const Duration(minutes: 60)), true);
     expect(
         DateCalc(2020, 3, 1).subtractMinute(1) == DateCalc(2020, 2, 29, 23, 59),
         true);
@@ -215,8 +215,8 @@ void main() {
 
   test('subtract seconds go well', () {
     final t = DateCalc.now();
-    expect(t.subtractSecond(1) == t.subtract(Duration(seconds: 1)), true);
-    expect(t.subtractSecond(60) == t.subtract(Duration(seconds: 60)), true);
+    expect(t.subtractSecond(1) == t.subtract(const Duration(seconds: 1)), true);
+    expect(t.subtractSecond(60) == t.subtract(const Duration(seconds: 60)), true);
     expect(
         DateCalc(2020, 3, 1).subtractSecond(1) ==
             DateCalc(2020, 2, 29, 23, 59, 59),
@@ -225,10 +225,10 @@ void main() {
 
   test('subtract milliseconds go well', () {
     final t = DateCalc.now();
-    expect(t.subtractMillisecond(1) == t.subtract(Duration(milliseconds: 1)),
+    expect(t.subtractMillisecond(1) == t.subtract(const Duration(milliseconds: 1)),
         true);
     expect(
-        t.subtractMillisecond(1000) == t.subtract(Duration(milliseconds: 1000)),
+        t.subtractMillisecond(1000) == t.subtract(const Duration(milliseconds: 1000)),
         true);
     expect(
         DateCalc(2020, 3, 1).subtractMillisecond(1) ==
@@ -238,10 +238,10 @@ void main() {
 
   test('subtract microseconds go well', () {
     final t = DateCalc.now();
-    expect(t.subtractMicrosecond(1) == t.subtract(Duration(microseconds: 1)),
+    expect(t.subtractMicrosecond(1) == t.subtract(const Duration(microseconds: 1)),
         true);
     expect(
-        t.subtractMicrosecond(1000) == t.subtract(Duration(microseconds: 1000)),
+        t.subtractMicrosecond(1000) == t.subtract(const Duration(microseconds: 1000)),
         true);
     expect(
         DateCalc(2020, 3, 1).subtractMicrosecond(1) ==
