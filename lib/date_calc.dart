@@ -121,6 +121,7 @@ class DateCalc extends DateTime {
   /// Returns a [DateCalc] instance based on [formattedString].
   /// DateCalc.parse('2019-01-02 03:45:06')
   /// => 2019-01-02 03:45:06.000
+  // ignore: prefer_constructors_over_static_methods
   static DateCalc parse(String formattedString) {
     return DateCalc.fromDateTime(DateTime.parse(formattedString));
   }
@@ -141,7 +142,7 @@ class DateCalc extends DateTime {
           if (daysInMonth != null) {
             return daysInMonth;
           }
-          throw new UnexceptedMonthException('Unexpected month ${month}');
+          throw new UnexceptedMonthException('Unexpected month $month');
   }
       
 
@@ -297,7 +298,7 @@ class DateCalc extends DateTime {
   /// DateTime.now() => 2020, 2, 3
   /// DateCalc(2020, 1, 2).differenceValue(type: DateType.month)
   /// => 1
-  int? differenceValue({DateTime? date, required DateType type}) {
+  int differenceValue({DateTime? date, required DateType type}) {
     final other = date == null ? DateCalc.now() : DateCalc.fromDateTime(date);
     final e = isBefore(other) ? this : other;
     final l = isBefore(other) ? other : this;
@@ -351,7 +352,7 @@ class DateCalc extends DateTime {
   /// DateCalc(2019, 2, 1).toFormattedString('yMd', 'ja_JP')
   /// => 2019/2/1
   ///
-  /// You can check usable locale in [dateTimePatternMap]
+  /// You can check usable locale in dateTimePatternMap
   /// in intl/date_time_patterns.dart.
   /// Call [initializeDateFormatting(locale)], then do [toFormattedString].
   String toFormattedString([String? format, String? locale]) {
