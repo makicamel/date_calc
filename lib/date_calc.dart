@@ -1,11 +1,21 @@
 library date_calc;
 
-import 'package:meta/meta.dart';
 import 'package:intl/intl.dart';
 
 enum DateType { year, month, day, hour, minute, second }
 
+class UnexceptedMonthException implements Exception {
+  String cause;
+  UnexceptedMonthException(this.cause);
+}
+
+class UnexpectedDateTypeException implements Exception {
+    String cause;
+  UnexpectedDateTypeException(this.cause);
+}
+
 class DateCalc extends DateTime {
+  static final _durationOneMs = const Duration(milliseconds: 1);
   /// Days count in a month.
   static final _daysInMonth = {
     1: 31,
@@ -87,14 +97,14 @@ class DateCalc extends DateTime {
   /// DateCalc(2020, 01, 01).dup() => 2020-01-01 00:00:00.000
   /// DateCalc(2020, 01, 01).dup(day: 2, hour: 1) => 2020-01-02 01:00:00.000
   DateCalc dup({
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    int second,
-    int millisecond,
-    int microsecond,
+    int? year,
+    int? month,
+    int? day,
+    int? hour,
+    int? minute,
+    int? second,
+    int? millisecond,
+    int? microsecond,
   }) {
     return DateCalc(
       year ?? this.year,
@@ -111,8 +121,10 @@ class DateCalc extends DateTime {
   /// Returns a [DateCalc] instance based on [formattedString].
   /// DateCalc.parse('2019-01-02 03:45:06')
   /// => 2019-01-02 03:45:06.000
-  static DateCalc parse(String formattedString) =>
-      DateCalc.fromDateTime(DateTime.parse(formattedString));
+  // ignore: prefer_constructors_over_static_methods
+  static DateCalc parse(String formattedString) {
+    return DateCalc.fromDateTime(DateTime.parse(formattedString));
+  }
 
   /// Returns true if given year is a leap year.
   /// DateCalc.isLeapYearFor(2020)
@@ -123,10 +135,16 @@ class DateCalc extends DateTime {
   /// Returns days count of given year and month.
   /// DateCalc.daysInMonthOf(year: 2020, month: 2)
   /// => 29
-  static int daysInMonthOf({@required int year, @required int month}) =>
-      (month == DateTime.february && isLeapYearFor(year))
+  static int daysInMonthOf({required int year, required int month}) {
+          final daysInMonth = (month == DateTime.february && isLeapYearFor(year))
           ? _daysInMonth['leap']
           : _daysInMonth[month];
+          if (daysInMonth != null) {
+            return daysInMonth;
+          }
+          throw new UnexceptedMonthException('Unexpected month $month');
+  }
+      
 
   /// Returns a [DateCalc] instance with the beginning time of the day.
   /// DateCalc(2020, 2, 5).beginningOfDay()
@@ -138,7 +156,7 @@ class DateCalc extends DateTime {
   /// DateCalc(2020, 2, 5).endOfDay()
   /// => 2020-02-05 23:59:59.999
   DateCalc endOfDay() => DateCalc.fromDateTime(
-      DateTime(year, month, day + 1).subtract(Duration(milliseconds: 1)));
+      DateTime(year, month, day + 1).subtract(_durationOneMs));
 
   /// Returns a [DateCalc] instance with the beginning time of the month.
   /// DateCalc(2020, 2, 5).beginningOfMonth()
@@ -150,7 +168,7 @@ class DateCalc extends DateTime {
   /// DateCalc(2020, 2, 5).endOfMonth()
   /// => 2020-02-29 23:59:59.999
   DateCalc endOfMonth() => DateCalc.fromDateTime(
-      DateTime(year, month + 1).subtract(Duration(milliseconds: 1)));
+      DateTime(year, month + 1).subtract(_durationOneMs));
 
   /// Returns true if self and given [date] are the same day.
   /// DateCalc(2020, 2, 5).isSameDay(DateTime(2020, 2, 5))
@@ -274,13 +292,13 @@ class DateCalc extends DateTime {
       dup(microsecond: microsecond - other);
 
   /// Returns int of given type.
-  /// When no given date, calcurate self and DateTime.now().
+  /// When no given date, calculate self and DateTime.now().
   /// DateCalc(2020, 1, 5).differenceValue(date: DateTime(2020, 3, 3), type: DateType.month)
   /// => 1
   /// DateTime.now() => 2020, 2, 3
   /// DateCalc(2020, 1, 2).differenceValue(type: DateType.month)
   /// => 1
-  int differenceValue({DateTime date, @required DateType type}) {
+  int differenceValue({DateTime? date, required DateType type}) {
     final other = date == null ? DateCalc.now() : DateCalc.fromDateTime(date);
     final e = isBefore(other) ? this : other;
     final l = isBefore(other) ? other : this;
@@ -308,7 +326,7 @@ class DateCalc extends DateTime {
         result = l.difference(e).inSeconds;
         break;
       default:
-      // do nothing
+        throw new UnexpectedDateTypeException('Unexpected DateType of $type');
     }
     return result;
   }
@@ -334,10 +352,10 @@ class DateCalc extends DateTime {
   /// DateCalc(2019, 2, 1).toFormattedString('yMd', 'ja_JP')
   /// => 2019/2/1
   ///
-  /// You can check usable locale in [dateTimePatternMap]
+  /// You can check usable locale in dateTimePatternMap
   /// in intl/date_time_patterns.dart.
   /// Call [initializeDateFormatting(locale)], then do [toFormattedString].
-  String toFormattedString([String format, String locale]) {
+  String toFormattedString([String? format, String? locale]) {
     return DateFormat(format, locale).format(this);
   }
 }
